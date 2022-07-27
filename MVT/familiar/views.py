@@ -5,7 +5,7 @@ from django.template import Template, Context, loader
 
 def padre(self):
 
-    padre = Familiar(nombre="Luis", edad="24", fecha_nac="1971-08-12")
+    padre = Familiar(nombre="Luis", edad="51", fecha_nac="1971-08-12")
     padre.save()
 
     datos = {"nombre": padre.nombre, "edad": padre.edad,
@@ -26,12 +26,11 @@ def madre(self):
     datos = {"nombre": madre.nombre, "edad": madre.edad,
              "fecha_nac": madre.fecha_nac}
 
-    with open(r"D:\Multimedia\Documents\Python's works\Django works\Ejercicio entregable\MVT\familiar\templates\madre.html") as f:
-        plantilla = Template(f.read())
+    plantilla = loader.get_template("madre.html")
 
-    contexto = Context(datos)
+    documento = plantilla.render(datos)
 
-    return HttpResponse(plantilla.render(contexto))
+    return HttpResponse(documento)
 
 
 def hijo(self):
@@ -39,6 +38,11 @@ def hijo(self):
     hijo = Familiar(nombre="Brahyam", edad="23", fecha_nac="1998-01-23")
     hijo.save()
 
-    ret = f"Soy el hijo mayor de la familia, mi nombre es {hijo.nombre}, nací el {hijo.fecha_nac} y tengo {hijo.edad} años."
+    datos = {"nombre": hijo.nombre, "edad": hijo.edad,
+             "fecha_nac": hijo.fecha_nac}
 
-    return HttpResponse(ret)
+    plantilla = loader.get_template("hijo.html")
+
+    documento = plantilla.render(datos)
+
+    return HttpResponse(documento)
