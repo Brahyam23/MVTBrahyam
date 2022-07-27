@@ -1,10 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from familiar.models import Familiar
 from django.template import Template, Context, loader
 
 
-def padre(request):
+def padre(self):
 
     padre = Familiar(nombre="Luis", edad="24", fecha_nac="1971-08-12")
     padre.save()
@@ -27,7 +26,7 @@ def madre(self):
     datos = {"nombre": madre.nombre, "edad": madre.edad,
              "fecha_nac": madre.fecha_nac}
 
-    with open(r"D:\Multimedia\Documents\Python's works\Django works\Ejercicio entregable\MVT\MVT\templates\madre.html") as f:
+    with open(r"D:\Multimedia\Documents\Python's works\Django works\Ejercicio entregable\MVT\familiar\templates\madre.html") as f:
         plantilla = Template(f.read())
 
     contexto = Context(datos)
