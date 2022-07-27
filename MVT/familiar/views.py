@@ -1,16 +1,22 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from familiar.models import Familiar
+from django.template import Template, Context, loader
 
 
-def padre(self):
+def padre(request):
 
     padre = Familiar(nombre="Luis", edad="24", fecha_nac="1971-08-12")
     padre.save()
 
-    ret = f"Soy el padre de la familia, mi nombre es {padre.nombre}, nací el {padre.fecha_nac} y tengo {padre.edad} años."
+    datos = {"nombre": padre.nombre, "edad": padre.edad,
+             "fecha_nac": padre.fecha_nac}
 
-    return HttpResponse(ret)
+    plantilla = loader.get_template("padre.html")
+
+    documento = plantilla.render(datos)
+
+    return HttpResponse(documento)
 
 
 def madre(self):
@@ -18,9 +24,15 @@ def madre(self):
     madre = Familiar(nombre="Monica", edad="49", fecha_nac="1973-01-23")
     madre.save()
 
-    ret = f"Soy la madre de la familia, mi nombre es {madre.nombre}, nací el {madre.fecha_nac} y tengo {madre.edad} años."
+    datos = {"nombre": madre.nombre, "edad": madre.edad,
+             "fecha_nac": madre.fecha_nac}
 
-    return HttpResponse(ret)
+    with open(r"D:\Multimedia\Documents\Python's works\Django works\Ejercicio entregable\MVT\MVT\templates\madre.html") as f:
+        plantilla = Template(f.read())
+
+    contexto = Context(datos)
+
+    return HttpResponse(plantilla.render(contexto))
 
 
 def hijo(self):
